@@ -1,99 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PotatoBank</title>
-    <style>
-        /* Reset some default styles */
-        body, h1, h2, h3, p, ul, li {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Container styles */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Input styles */
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        /* Button styles */
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #1e6eb5;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: #15548a;
-        }
-    </style>
-    <script>
-        function signIn() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-
-            var storedUsernames = localStorage.getItem("usernames");
-            var storedPasswords = localStorage.getItem("passwords");
-
-            if (storedUsernames && storedPasswords) {
-                var validUsernames = storedUsernames.split(",");
-                var validPasswords = storedPasswords.split(",");
-
-                var isValid = false;
-                for (var i = 0; i < validUsernames.length; i++) {
-                    if (username === validUsernames[i] && password === validPasswords[i]) {
-                        isValid = true;
-                        break;
-                    }
-                }
-
-                if (isValid) {
-                    document.getElementById("signin-page").style.display = "none";
-                    document.getElementById("main-page").style.display = "block";
-                    document.getElementById("welcome-message").textContent = "Welcome, " + username + "!";
-                } else {
-                    alert("Invalid username or password. Please try again.");
-                }
-            } else {
-                alert("No registered users found. Please register first.");
-            }
-        }
-    </script>
+    <!-- ... Your existing head content ... -->
 </head>
 <body>
-    <div class="container" id="signin-page">
-        <h1>Sign In</h1>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button class="button" onclick="signIn()">Sign In</button>
-    </div>
+    <header>
+        <!-- ... Your existing header content ... -->
+    </header>
+    <main>
+        <!-- Sign In Form -->
+        <section id="sign-in">
+            <h2>Sign In</h2>
+            <form id="signin-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Sign In</button>
+            </form>
+        </section>
 
-    <div class="container" id="main-page" style="display: none;">
-        <h1 id="welcome-message"></h1>
-        <p>Main website content goes here...</p>
-    </div>
+        <!-- Sign Up Form -->
+        <section id="sign-up">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <label for="new-username">Username:</label>
+                <input type="text" id="new-username" name="new-username" required>
+                <label for="new-password">Password:</label>
+                <input type="password" id="new-password" name="new-password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </section>
+
+        <!-- Rest of your existing main content -->
+    </main>
+    <footer>
+        <!-- ... Your existing footer content ... -->
+    </footer>
+    <script>
+        // Placeholder for user information (in a real application, you'd use a database)
+        const users = [
+            { username: "john_potato", password: "john123" },
+            // Add more users here
+        ];
+
+        // Get references to the forms
+        const signInForm = document.getElementById("signin-form");
+        const signUpForm = document.getElementById("signup-form");
+
+        // Add event listeners for form submissions
+        signInForm.addEventListener("submit", signIn);
+        signUpForm.addEventListener("submit", signUp);
+
+        function signIn(event) {
+            event.preventDefault();
+            const username = signInForm.querySelector("#username").value;
+            const password = signInForm.querySelector("#password").value;
+            
+            const user = users.find(user => user.username === username && user.password === password);
+            if (user) {
+                alert("Sign-in successful!");
+                // You can redirect the user to their account page or update the UI here
+            } else {
+                alert("Invalid credentials. Please try again.");
+            }
+        }
+
+        function signUp(event) {
+            event.preventDefault();
+            const newUsername = signUpForm.querySelector("#new-username").value;
+            const newPassword = signUpForm.querySelector("#new-password").value;
+
+            if (users.some(user => user.username === newUsername)) {
+                alert("Username already exists. Please choose a different one.");
+            } else {
+                users.push({ username: newUsername, password: newPassword });
+                alert("Sign-up successful! You can now sign in with your new account.");
+            }
+        }
+
+        // Your existing balance update and button event handling code
+    </script>
 </body>
 </html>
