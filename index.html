@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Super Cool Website - Sign In</title>
+  <style>
+    body {
+      background: linear-gradient(45deg, #0080b3, #ffffff);
+      font-family: 'Arial', sans-serif;
+    }
 
+    h1 {
+      font-size: 48px;
+      color: black;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .text-placeholder {
+      width: 100%;
+      height: 30px;
+      background: #f2f2f2;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ffcc00;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: #ff9900;
+    }
+
+    #signin-page {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="signin-page">
+    <h1>Sign In</h1>
+    <input type="text" id="username" class="text-placeholder" placeholder="Username">
+    <input type="password" id="password" class="text-placeholder" placeholder="Password">
+    <button class="button" onclick="signIn()">Sign In</button>
+    <br>
+    <p>Don't have an account? <a href="#" onclick="showRegistration()">Register</a></p>
+  </div>
+
+  <script>
+    function signIn() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      var storedUsernames = localStorage.getItem("usernames");
+      var storedPasswords = localStorage.getItem("passwords");
+
+      if (storedUsernames && storedPasswords) {
+        var validUsernames = storedUsernames.split(",");
+        var validPasswords = storedPasswords.split(",");
+
+        var isValid = false;
+        for (var i = 0; i < validUsernames.length; i++) {
+          if (username === validUsernames[i] && password === validPasswords[i]) {
+            isValid = true;
+            break;
+          }
+        }
+
+        if (isValid) {
+          alert("Sign in successful!");
+        } else {
+          alert("Invalid username or password. Please try again.");
+        }
+      } else {
+        alert("No registered users found. Please register first.");
+      }
+    }
+
+    function showRegistration() {
+      alert("Redirecting to registration page...");
+    }
+  </script>
+</body>
+</html>
