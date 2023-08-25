@@ -1,99 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Super Cool Website - Sign In</title>
-  <style>
-    body {
-      background: linear-gradient(45deg, #0080b3, #ffffff);
-      font-family: 'Arial', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PotatoBank</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, h3, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
 
-    h1 {
-      font-size: 48px;
-      color: black;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
+        body {
+            font-family: Arial, sans-serif;
+        }
 
-    .container {
-      width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
 
-    .text-placeholder {
-      width: 100%;
-      height: 30px;
-      background: #f2f2f2;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
+        /* Input styles */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-    .button {
-      display: inline-block;
-      padding: 10px 20px;
-      background: #ffcc00;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      text-align: center;
-      transition: background 0.3s ease;
-    }
+        /* Button styles */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1e6eb5;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .button:hover {
-      background: #ff9900;
-    }
+        .button:hover {
+            background-color: #15548a;
+        }
+    </style>
+    <script>
+        function signIn() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
 
-    #signin-page {
-      display: block;
-    }
-  </style>
+            var storedUsernames = localStorage.getItem("usernames");
+            var storedPasswords = localStorage.getItem("passwords");
+
+            if (storedUsernames && storedPasswords) {
+                var validUsernames = storedUsernames.split(",");
+                var validPasswords = storedPasswords.split(",");
+
+                var isValid = false;
+                for (var i = 0; i < validUsernames.length; i++) {
+                    if (username === validUsernames[i] && password === validPasswords[i]) {
+                        isValid = true;
+                        break;
+                    }
+                }
+
+                if (isValid) {
+                    document.getElementById("signin-page").style.display = "none";
+                    document.getElementById("main-page").style.display = "block";
+                    document.getElementById("welcome-message").textContent = "Welcome, " + username + "!";
+                } else {
+                    alert("Invalid username or password. Please try again.");
+                }
+            } else {
+                alert("No registered users found. Please register first.");
+            }
+        }
+    </script>
 </head>
 <body>
-  <div class="container" id="signin-page">
-    <h1>Sign In</h1>
-    <input type="text" id="username" class="text-placeholder" placeholder="Username">
-    <input type="password" id="password" class="text-placeholder" placeholder="Password">
-    <button class="button" onclick="signIn()">Sign In</button>
-    <br>
-    <p>Don't have an account? <a href="#" onclick="showRegistration()">Register</a></p>
-  </div>
+    <div class="container" id="signin-page">
+        <h1>Sign In</h1>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button class="button" onclick="signIn()">Sign In</button>
+    </div>
 
-  <script>
-    function signIn() {
-      var username = document.getElementById("username").value;
-      var password = document.getElementById("password").value;
-
-      var storedUsernames = localStorage.getItem("usernames");
-      var storedPasswords = localStorage.getItem("passwords");
-
-      if (storedUsernames && storedPasswords) {
-        var validUsernames = storedUsernames.split(",");
-        var validPasswords = storedPasswords.split(",");
-
-        var isValid = false;
-        for (var i = 0; i < validUsernames.length; i++) {
-          if (username === validUsernames[i] && password === validPasswords[i]) {
-            isValid = true;
-            break;
-          }
-        }
-
-        if (isValid) {
-          alert("Sign in successful!");
-        } else {
-          alert("Invalid username or password. Please try again.");
-        }
-      } else {
-        alert("No registered users found. Please register first.");
-      }
-    }
-
-    function showRegistration() {
-      alert("Redirecting to registration page...");
-    }
-  </script>
+    <div class="container" id="main-page" style="display: none;">
+        <h1 id="welcome-message"></h1>
+        <p>Main website content goes here...</p>
+    </div>
 </body>
 </html>
